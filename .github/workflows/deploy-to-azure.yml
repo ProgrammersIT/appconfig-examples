@@ -6,7 +6,7 @@ on:
 
 env:
   AZURE_WEBAPP_NAME: appconfig-examples
-  AZURE_WEBAPP_PACKAGE_PATH: '.' 
+  AZURE_WEBAPP_PACKAGE_PATH: './package' 
 
 jobs:
   build:
@@ -23,6 +23,8 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --configuration Release --no-restore
+    - name: Publish
+      run: dotnet publish -c Release -o package
     - name: 'Deploy to Azure WebApp'
       uses: azure/webapps-deploy@v2
       with:
