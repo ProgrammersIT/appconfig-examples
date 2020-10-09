@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_WEBAPP_NAME: appconfig-examples
+  AZURE_WEBAPP_NAME: appconfig-examples-3044
   AZURE_WEBAPP_PACKAGE_PATH: './package' 
 
 jobs:
