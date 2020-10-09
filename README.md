@@ -44,14 +44,22 @@ You'll need to do the following steps:
 
 #### Download the publish profile
 
-Run the following command to get your publish profile
-
-```bash
- az webapp deployment list-publishing-profiles -g appconfig-examples -n $SITE_NAME --xml
-```
-
-Copy the output and [create a Github Secret](https://docs.github.com/pt/free-pro-team@latest/actions/reference/encrypted-secrets#creating-encrypted-secrets-for-a-repository) named *AZURE_WEBAPP_PUBLISH_PROFILE* and paste the xml as the secret value
+Go to the Azure Portal, find your web app and click "Get Publish Profile". It'll download the publish profile xml file. Copy the content and [create a Github Secret](https://docs.github.com/pt/free-pro-team@latest/actions/reference/encrypted-secrets#creating-encrypted-secrets-for-a-repository) named *AZURE_WEBAPP_PUBLISH_PROFILE* and paste the xml as the secret value.
 
 #### Update site name
 
 Open the file **.github/workflows/deploy-to-azure.yml** with ~vim~ your favorite text editor and set the variable **AZURE_WEBAPP_NAME** with your site name. Commit it to the main branch and push it to your fork. The workflow should deploy the site to azure!
+
+### Testing
+
+After the workflow is done sucessfully, run the following command into your terminal
+
+```bash
+ curl -X GET https://$SITE_NAME.azurewebsites.net/WeatherForecast
+ ```
+
+ You should see an output similar with
+
+ ```json
+[{"date":"2020-10-10T01:30:05.1297458+00:00","temperatureC":32,"temperatureF":89,"summary":"Cool"},{"date":"2020-10-11T01:30:05.1297617+00:00","temperatureC":-13,"temperatureF":9,"summary":"Mild"},{"date":"2020-10-12T01:30:05.1297719+00:00","temperatureC":39,"temperatureF":102,"summary":"Freezing"},{"date":"2020-10-13T01:30:05.1297819+00:00","temperatureC":-9,"temperatureF":16,"summary":"Mild"},{"date":"2020-10-14T01:30:05.1297919+00:00","temperatureC":-18,"temperatureF":0,"summary":"Freezing"},{"date":"2020-10-15T01:30:05.1298018+00:00","temperatureC":36,"temperatureF":96,"summary":"Mild"},{"date":"2020-10-16T01:30:05.1298118+00:00","temperatureC":0,"temperatureF":32,"summary":"Balmy"},{"date":"2020-10-17T01:30:05.1298219+00:00","temperatureC":41,"temperatureF":105,"summary":"Sweltering"},{"date":"2020-10-18T01:30:05.1298318+00:00","temperatureC":34,"temperatureF":93,"summary":"Scorching"},{"date":"2020-10-19T01:30:05.1298417+00:00","temperatureC":12,"temperatureF":53,"summary":"Sweltering"}]
+ ```
